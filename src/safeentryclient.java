@@ -78,7 +78,7 @@ public class safeentryclient {
 	}
 	
 
-	public boolean groupcheckin(safeentry se, Scanner scanner) throws RemoteException {
+	public Boolean groupcheckin(safeentry se, Scanner scanner) throws RemoteException {
 		System.out.println("These are the list of available locations.");
 		String[] locationlist = se.listlocations();
 		
@@ -197,7 +197,8 @@ public class safeentryclient {
 					commandexecuted = client.checkOut(se, scanner);
 					break;
 				case "/groupcheckin":
-					commandexecuted = client.groupcheckin(se, scanner);
+					System.out.println("Group Checkin selected");
+					client.groupcheckin(se, scanner);
 					break;
 				case "/groupcheckout":
 					client.groupcheckout();
