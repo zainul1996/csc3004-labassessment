@@ -8,9 +8,9 @@ public interface safeentry extends java.rmi.Remote {
 
 	public Boolean checkout(String nric, int checkid, long timestamp) throws java.rmi.RemoteException;
 
-	public Boolean groupcheckin(String[] nrics, int locationid, long timestamp) throws java.rmi.RemoteException;
+	public Boolean groupcheckin(String[] nrics, String location, long timestamp) throws java.rmi.RemoteException;
 
-	public Boolean groupcheckout(String[] nrics, int locationid, long timestamp) throws java.rmi.RemoteException;
+	public Boolean groupcheckout(String[] nrics, String location, long timestamp) throws java.rmi.RemoteException;
 
 	public String[][] locationhistory(int locationid) throws java.rmi.RemoteException;
 
