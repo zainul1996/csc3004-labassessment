@@ -12,7 +12,7 @@ public interface safeentry extends java.rmi.Remote {
 
 	public Boolean groupcheckout(String[] nrics, String location, long timestamp) throws java.rmi.RemoteException;
 
-	public String[][] locationhistory(int locationid) throws java.rmi.RemoteException;
+	public ArrayList<locationPOJO> locationhistory(int locationid) throws java.rmi.RemoteException;
 
 	public ArrayList<locationPOJO> myhistory(String nric) throws java.rmi.RemoteException;
 

@@ -176,7 +176,7 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized String[][] locationhistory(int locationid) throws RemoteException {
+	public synchronized ArrayList<locationPOJO> locationhistory(int locationid) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
