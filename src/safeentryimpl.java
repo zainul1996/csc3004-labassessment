@@ -163,8 +163,43 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 	@SuppressWarnings("unchecked")
 	@Override
 	public synchronized Boolean groupcheckin(String[] nrics, String location, long timestamp) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		// Create check in object
+				JSONObject checkInObject = new JSONObject();
+				checkInObject.put("location", location);
+				checkInObject.put("intimestamp", timestamp);
+
+				try {
+					JSONParser jsonParser = new JSONParser();
+
+					// FileReader for checkIn.json
+					FileReader reader = new FileReader("checkIn.json");
+
+					// Construct a JSONObject out of existing checkin
+					Object obj = jsonParser.parse(reader);
+					JSONObject checkInObj = (JSONObject) obj;
+
+					// FileWriter for checkIn.json
+					FileWriter file = new FileWriter("checkIn.json");
+					
+					for (int i = 0; i < nrics.length; i++) {
+						// Get the list of user check in's and add the new check in to it
+						JSONArray userCheckInList = (JSONArray) checkInObj.get(nrics[i]);
+						userCheckInList.add(checkInObject);
+						
+						// Replace the old check in list with new check in list in object
+						checkInObj.replace(nrics, userCheckInList);
+					}
+
+
+					// Write it into the file
+					file.write(checkInObj.toJSONString());
+					file.flush();
+					return true;
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
 	}
 
 	@SuppressWarnings("unchecked")

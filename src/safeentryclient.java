@@ -78,8 +78,37 @@ public class safeentryclient {
 	}
 	
 
-	public void groupcheckin() {
+	public boolean groupcheckin(safeentry se, Scanner scanner) throws RemoteException {
+		System.out.println("These are the list of available locations.");
+		String[] locationlist = se.listlocations();
+		
+		System.out.println("Enter number of total check-ins.");
+		int grpSize = scanner.nextInt();
+		String[] nricList = new String[grpSize];
+		
+		for (int i = 0; i < grpSize; i++) {
+			System.out.println("Enter NRIC of user"+i+1);
+			nricList[i] = scanner.next();
+		}
+		
+		for (int i = 0; i < locationlist.length; i++) {
+			System.out.println(i + ". " + locationlist[i]);
+		}
+		
+		Boolean checkedin = false;
+		while (!checkedin) {
+			System.out.println("Enter the number that represents the location that you're checking into.");
+			int locationId = scanner.nextInt();
+			if (locationlist.length > locationId && locationlist[locationId] != null) {
+				checkedin = se.checkin(username, locationlist[locationId], getTimeStamp());
+				System.out.println("Checked In Successfully !!");
+				return true;
+			} else {
+				System.out.println("Incorrect entry try again!");
+			}
 
+		}
+		return false;
 	}
 
 	public void groupcheckout() {
@@ -168,7 +197,7 @@ public class safeentryclient {
 					commandexecuted = client.checkOut(se, scanner);
 					break;
 				case "/groupcheckin":
-					client.groupcheckin();
+					commandexecuted = client.groupcheckin(se, scanner);
 					break;
 				case "/groupcheckout":
 					client.groupcheckout();
