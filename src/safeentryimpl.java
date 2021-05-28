@@ -162,14 +162,14 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized Boolean groupcheckin(String[] nrics, int locationid, long timestamp) throws RemoteException {
+	public synchronized Boolean groupcheckin(String[] nrics, String location, long timestamp) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized Boolean groupcheckout(String[] nrics, int locationid, long timestamp) throws RemoteException {
+	public synchronized Boolean groupcheckout(String[] nrics, String location, long timestamp) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
