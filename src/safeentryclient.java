@@ -78,8 +78,8 @@ public class safeentryclient {
 	}
 	
 
-	public void groupcheckin() {
-
+	public void groupcheckin(safeentry se, Scanner scanner) {
+		System.out.println("test");
 	}
 
 	public void groupcheckout() {
@@ -168,7 +168,8 @@ public class safeentryclient {
 					commandexecuted = client.checkOut(se, scanner);
 					break;
 				case "/groupcheckin":
-					client.groupcheckin();
+					System.out.println("hi");
+					client.groupcheckin(se, scanner);
 					break;
 				case "/groupcheckout":
 					client.groupcheckout();

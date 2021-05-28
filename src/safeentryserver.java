@@ -22,45 +22,6 @@ public class safeentryserver {
 		}
 	}
 
-	private String getuserip(String nric) {
-
-		return null;
-	}
-
-	public static void writetojsonfile(String data) {
-		// Write JSON file
-		try (FileWriter file = new FileWriter("user.json")) {
-			// We can write any JSONArray or JSONObject instance to the file
-			file.write(data);
-			file.flush();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static Object readfromjsonfile() {
-		// JSON parser object to parse read file
-		JSONParser jsonParser = new JSONParser();
-
-		try (FileReader reader = new FileReader("user.json")) {
-			// Read JSON file
-			Object obj = jsonParser.parse(reader);
-
-			return obj;
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-
 	public static void main(String args[]) {
 		if (args.length == 1)
 			port = Integer.parseInt(args[0]);

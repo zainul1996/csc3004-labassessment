@@ -30,25 +30,32 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 	public synchronized Boolean login(String nric, String password) throws RemoteException {
 		JSONParser jsonParser = new JSONParser();
 
-		try{
+		try {
 			// Read user.json
 			FileReader reader = new FileReader("user.json");
-			
+
 			// Get the object that matches the nric
 			Object obj = jsonParser.parse(reader);
 			JSONObject usersObj = (JSONObject) obj;
-			JSONObject userObj = (JSONObject) usersObj.get(nric);
-			if (userObj.get("password").equals(password))
-				return true;
-		}catch(Exception e) {
+			if (usersObj.containsKey(nric)) {
+				JSONObject userObj = (JSONObject) usersObj.get(nric);
+				if (userObj.get("password").equals(password))
+					return true;
+			}
+			else {
+				return false;
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 		return false;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized Boolean checkin(String nric, String location, long timestamp) throws RemoteException {
+	public Boolean checkin(String nric, String location, long timestamp) throws RemoteException {
 		// Create check in object
 		JSONObject checkInObject = new JSONObject();
 		checkInObject.put("location", location);
@@ -63,17 +70,25 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 			// Construct a JSONObject out of existing checkin
 			Object obj = jsonParser.parse(reader);
 			JSONObject checkInObj = (JSONObject) obj;
+			if (checkInObj.containsKey(nric)) {
+				// Get the list of user check in's and add the new check in to it
+				JSONArray userCheckInList = (JSONArray) checkInObj.get(nric);
+				userCheckInList.add(checkInObject);
 
+				// Replace the old check in list with new check in list in object
+				checkInObj.replace(nric, userCheckInList);
+			} else {
+				// Get the list of user check in's and add the new check in to it
+				JSONArray userCheckInList = new JSONArray();
+				userCheckInList.add(checkInObject);
+
+				// Replace the old check in list with new check in list in object
+				checkInObj.put(nric, userCheckInList);
+
+			}
+			
 			// FileWriter for checkIn.json
 			FileWriter file = new FileWriter("checkIn.json");
-
-			// Get the list of user check in's and add the new check in to it
-			JSONArray userCheckInList = (JSONArray) checkInObj.get(nric);
-			userCheckInList.add(checkInObject);
-
-			// Replace the old check in list with new check in list in object
-			checkInObj.replace(nric, userCheckInList);
-
 			// Write it into the file
 			file.write(checkInObj.toJSONString());
 			file.flush();
@@ -122,9 +137,8 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 			// FileWriter for locationhistory.json
 			FileWriter locationHistoryWriter = new FileWriter("locationhistory.json");
 
-			
 			// Get the list of checkin/checkout history
-			if(locationHistoryJsonObj.containsKey(removedLocation.get("location"))) {
+			if (locationHistoryJsonObj.containsKey(removedLocation.get("location"))) {
 				JSONArray historyJsonObj = (JSONArray) locationHistoryJsonObj.get(removedLocation.get("location"));
 				// Create the new checkin/checkout object and add into the history
 				JSONObject checkInObject = new JSONObject();
@@ -132,10 +146,10 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 				checkInObject.put("intimestamp", removedLocation.get("intimestamp"));
 				checkInObject.put("outtimestamp", outtimestamp);
 				historyJsonObj.add(checkInObject);
-				
+
 				// Replace the old checkin/checkout history with new checkin/checkout history
 				locationHistoryJsonObj.replace(removedLocation.get("location"), historyJsonObj);
-			}else {
+			} else {
 				JSONArray historyJsonObj = new JSONArray();
 				// Create the new checkin/checkout object and add into the history
 				JSONObject checkInObject = new JSONObject();
@@ -143,12 +157,12 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 				checkInObject.put("intimestamp", removedLocation.get("intimestamp"));
 				checkInObject.put("outtimestamp", outtimestamp);
 				historyJsonObj.add(checkInObject);
-				
+
 				// Replace the old checkin/checkout history with new checkin/checkout history
 				locationHistoryJsonObj.put(removedLocation.get("location"), historyJsonObj);
-			
+
 			}
-			
+
 			// Write it into the file
 			locationHistoryWriter.write(locationHistoryJsonObj.toJSONString());
 			locationHistoryWriter.flush();
