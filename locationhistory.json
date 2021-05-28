@@ -1,0 +1,26 @@
+{
+    "Marina Bay Sands": [
+        {
+            "intimestamp": 1622181077965,
+            "outtimestamp": 1622181079999,
+            "nric": "S9608562A"
+        },
+        {
+            "intimestamp": 1622189887879,
+            "outtimestamp": 1622189997879,
+            "nric": "S9608562A"
+        },
+        {
+            "intimestamp": 1622181077965,
+            "outtimestamp": 1622199637405,
+            "nric": "S9608562A"
+        }
+    ],
+    "Singapore Flyer": [
+        {
+            "intimestamp": 1622189887879,
+            "outtimestamp": 1622202731477,
+            "nric": "S9608562A"
+        }
+    ]
+}
