@@ -41,11 +41,10 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 				JSONObject userObj = (JSONObject) usersObj.get(nric);
 				if (userObj.get("password").equals(password))
 					return true;
-			}
-			else {
+			} else {
 				return false;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -86,7 +85,7 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 				checkInObj.put(nric, userCheckInList);
 
 			}
-			
+
 			// FileWriter for checkIn.json
 			FileWriter file = new FileWriter("checkIn.json");
 			// Write it into the file
@@ -177,8 +176,42 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 	@SuppressWarnings("unchecked")
 	@Override
 	public synchronized Boolean groupcheckin(String[] nrics, String location, long timestamp) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		// Create check in object
+		JSONObject checkInObject = new JSONObject();
+		checkInObject.put("location", location);
+		checkInObject.put("intimestamp", timestamp);
+
+		try {
+			JSONParser jsonParser = new JSONParser();
+
+			// FileReader for checkIn.json
+			FileReader reader = new FileReader("checkIn.json");
+
+			// Construct a JSONObject out of existing checkin
+			Object obj = jsonParser.parse(reader);
+			JSONObject checkInObj = (JSONObject) obj;
+
+			// FileWriter for checkIn.json
+			FileWriter file = new FileWriter("checkIn.json");
+
+			for (int i = 0; i < nrics.length; i++) {
+				// Get the list of user check in's and add the new check in to it
+				JSONArray userCheckInList = (JSONArray) checkInObj.get(nrics[i]);
+				userCheckInList.add(checkInObject);
+
+				// Replace the old check in list with new check in list in object
+				checkInObj.replace(nrics, userCheckInList);
+			}
+
+			// Write it into the file
+			file.write(checkInObj.toJSONString());
+			file.flush();
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -209,20 +242,24 @@ public class safeentryimpl extends java.rmi.server.UnicastRemoteObject implement
 			Object obj = jsonParser.parse(reader);
 			JSONObject checkInObj = (JSONObject) obj;
 
-			// Get list of currently checkin places
-			JSONArray userCheckInList = (JSONArray) checkInObj.get(nric);
+			
+			if(checkInObj.containsKey(nric)) {
+				// Get list of currently checkin places
+				JSONArray userCheckInList = (JSONArray) checkInObj.get(nric);
 
-			ArrayList<locationPOJO> locationArrList = new ArrayList<locationPOJO>();
-			for (Object object : userCheckInList) {
-				JSONObject locationObj = (JSONObject) object;
-				System.out.println(locationObj.get("location") + " : " + locationObj.get("intimestamp"));
-				location = new locationPOJO();
-				location.setTimestamp((Long) locationObj.get("intimestamp"));
-				location.setLocation((String) locationObj.get("location"));
-				locationArrList.add(location);
+				ArrayList<locationPOJO> locationArrList = new ArrayList<locationPOJO>();
+				for (Object object : userCheckInList) {
+					JSONObject locationObj = (JSONObject) object;
+					System.out.println(locationObj.get("location") + " : " + locationObj.get("intimestamp"));
+					location = new locationPOJO();
+					location.setTimestamp((Long) locationObj.get("intimestamp"));
+					location.setLocation((String) locationObj.get("location"));
+					locationArrList.add(location);
+				}
+
+				return locationArrList;
 			}
-
-			return locationArrList;
+			return null;
 
 		} catch (Exception e) {
 			e.printStackTrace();

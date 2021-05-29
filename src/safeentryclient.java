@@ -76,10 +76,38 @@ public class safeentryclient {
 		}
 		return false;
 	}
-	
 
-	public void groupcheckin(safeentry se, Scanner scanner) {
-		System.out.println("test");
+	public Boolean groupcheckin(safeentry se, Scanner scanner) throws RemoteException {
+		System.out.println("These are the list of available locations.");
+		String[] locationlist = se.listlocations();
+
+		System.out.println("Enter number of total check-ins.");
+		int grpSize = scanner.nextInt();
+		String[] nricList = new String[grpSize];
+
+		for (int i = 0; i < grpSize; i++) {
+			System.out.println("Enter NRIC of user" + i + 1);
+			nricList[i] = scanner.next();
+		}
+
+		for (int i = 0; i < locationlist.length; i++) {
+			System.out.println(i + ". " + locationlist[i]);
+		}
+
+		Boolean checkedin = false;
+		while (!checkedin) {
+			System.out.println("Enter the number that represents the location that you're checking into.");
+			int locationId = scanner.nextInt();
+			if (locationlist.length > locationId && locationlist[locationId] != null) {
+				checkedin = se.checkin(username, locationlist[locationId], getTimeStamp());
+				System.out.println("Checked In Successfully !!");
+				return true;
+			} else {
+				System.out.println("Incorrect entry try again!");
+			}
+
+		}
+		return false;
 	}
 
 	public void groupcheckout() {
@@ -89,7 +117,9 @@ public class safeentryclient {
 	public void myhistory(safeentry se, Scanner scanner) {
 		try {
 			ArrayList<locationPOJO> locationArrList = se.myhistory(username);
-			if(locationArrList.size() == 0) {
+			if (locationArrList == null) {
+				System.out.println("You've no active checked in places.");
+			} else if(locationArrList.size() == 0) {
 				System.out.println("You've no active checked in places.");
 			}
 			else {
@@ -101,9 +131,7 @@ public class safeentryclient {
 					System.out.println(i + ". " + locationPOJO.getLocation() + ", checked in on: " + date);
 				}
 			}
-			
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -168,7 +196,6 @@ public class safeentryclient {
 					commandexecuted = client.checkOut(se, scanner);
 					break;
 				case "/groupcheckin":
-					System.out.println("hi");
 					client.groupcheckin(se, scanner);
 					break;
 				case "/groupcheckout":

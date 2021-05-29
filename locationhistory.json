@@ -4,6 +4,21 @@
             "intimestamp": 1622203622415,
             "outtimestamp": 1622203679635,
             "nric": "S9608562A"
+        },
+        {
+            "intimestamp": 1622207910553,
+            "outtimestamp": 1622208111773,
+            "nric": "S1234567A"
+        },
+        {
+            "intimestamp": 1622208168608,
+            "outtimestamp": 1622208190755,
+            "nric": "S1234567A"
+        },
+        {
+            "intimestamp": 1622229731324,
+            "outtimestamp": 1622229741548,
+            "nric": "S9608562A"
         }
     ],
     "Marina Bay Sands": [
@@ -21,6 +36,11 @@
             "intimestamp": 1622181077965,
             "outtimestamp": 1622199637405,
             "nric": "S9608562A"
+        },
+        {
+            "intimestamp": 1622209879038,
+            "outtimestamp": 1622210059185,
+            "nric": "S1234567A"
         }
     ],
     "Singapore Flyer": [
@@ -28,6 +48,18 @@
             "intimestamp": 1622189887879,
             "outtimestamp": 1622202731477,
             "nric": "S9608562A"
+        }
+    ],
+    "Universal Studios": [
+        {
+            "intimestamp": 1622207447226,
+            "outtimestamp": 1622208162721,
+            "nric": "S1234567A"
+        },
+        {
+            "intimestamp": 1622209922033,
+            "outtimestamp": 1622210110493,
+            "nric": "S1234567A"
         }
     ]
 }
