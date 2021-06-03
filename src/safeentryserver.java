@@ -1,21 +1,11 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.rmi.Naming; //Import naming classes to bind to rmiregistry
+import java.rmi.Naming;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-public class safeentryserver {
+public class SafeEntryServer {
 	static int port = 1099;
 
-	public safeentryserver() {
-
+	public SafeEntryServer() {
 		try {
-			safeentry c = new safeentryimpl();
+			SafeEntryServerIntf c = new SafeEntryImpl();
 			Naming.bind("rmi://localhost/SafeEntryService", c);
 		} catch (Exception e) {
 			System.out.println("Server Error: " + e);
@@ -25,7 +15,6 @@ public class safeentryserver {
 	public static void main(String args[]) {
 		if (args.length == 1)
 			port = Integer.parseInt(args[0]);
-		new safeentryserver();
-
+		new SafeEntryServer();
 	}
 }

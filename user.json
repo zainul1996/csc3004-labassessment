@@ -1,8 +1,37 @@
 {
-    "S1234567A": {
-        "password": "1234567"
+    "S1111111A": {
+        "password": "password",
+        "name": "1",
+        "isMOH": false
     },
-    "S9608562A": {
-        "password": "p@ssw0rd"
+    "S2222222A": {
+        "password": "password",
+        "name": "2",
+        "isMOH": false
+    },
+    "S3333333A": {
+        "password": "password",
+        "name": "3",
+        "isMOH": false
+    },
+    "S444444A": {
+        "password": "password",
+        "name": "4",
+        "isMOH": false
+    },
+    "S555555A": {
+        "password": "password",
+        "name": "5",
+        "isMOH": false
+    },
+    "S666666A": {
+        "password": "password",
+        "name": "6",
+        "isMOH": false
+    },
+    "S7777777A": {
+        "password": "password",
+        "name": "7",
+        "isMOH": true
     }
 }
