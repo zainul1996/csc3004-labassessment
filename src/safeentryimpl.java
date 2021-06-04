@@ -596,9 +596,7 @@ public class SafeEntryImpl extends java.rmi.server.UnicastRemoteObject implement
 				for (Object object : userCheckInList) {
 					JSONObject locationObj = (JSONObject) object;
 					System.out.println(locationObj.get("location") + " : " + locationObj.get("intimestamp"));
-					location = new Location();
-					location.setTimestamp((Long) locationObj.get("intimestamp"));
-					location.setLocation((String) locationObj.get("location"));
+					location = new Location((String) locationObj.get("location"), (Long) locationObj.get("intimestamp"));
 					locationArrList.add(location);
 				}
 

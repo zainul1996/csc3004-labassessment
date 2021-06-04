@@ -7,40 +7,24 @@
             "nric": "S1111111A"
         },
         {
-            "intimestamp": 1622720169801,
-            "outtimestamp": 1622720184908,
-            "alerted": false,
-            "nric": "S1111111A"
-        },
-        {
-            "intimestamp": 1622720169801,
-            "outtimestamp": 1622720184908,
+            "intimestamp": 1622720093434,
+            "outtimestamp": 1622720105228,
             "alerted": false,
             "nric": "S2222222A"
-        },
+        }
+    ],
+    "Marina Bay Sands": [
         {
-            "intimestamp": 1622720191411,
-            "outtimestamp": 1622720195362,
+            "intimestamp": 1622720093434,
+            "outtimestamp": 1622720105228,
             "alerted": false,
             "nric": "S1111111A"
         },
         {
-            "intimestamp": 1622720204396,
-            "outtimestamp": 1622720207257,
+            "intimestamp": 1622720093434,
+            "outtimestamp": 1622720105228,
             "alerted": false,
-            "nric": "S1111111A"
-        },
-        {
-            "intimestamp": 1622720209580,
-            "outtimestamp": 1622720213102,
-            "alerted": false,
-            "nric": "S1111111A"
-        },
-        {
-            "intimestamp": 1622720233244,
-            "outtimestamp": 1622720235573,
-            "alerted": false,
-            "nric": "S1111111A"
+            "nric": "S2222222A"
         }
     ]
 }
